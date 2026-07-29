@@ -1,0 +1,6 @@
+.superpowers/
+.omc/
+node_modules/
+.next/
+data/psai.db
+.env.local
