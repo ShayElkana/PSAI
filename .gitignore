@@ -44,5 +44,5 @@ next-env.d.ts
 .superpowers/
 .omc/
 
-# local persistent memory db
-data/*.db
+# local persistent memory db (includes WAL/SHM sidecar files)
+data/*.db*

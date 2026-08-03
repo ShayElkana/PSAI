@@ -1,8 +1,7 @@
-// Region-agnostic on purpose: PSAI doesn't know where its person is located,
-// and getting a country-specific hotline wrong would be worse than saying
-// nothing. Point at a directory instead of guessing a number.
+// A young child can't call a hotline or navigate a website, so the message
+// points them at the one thing they can actually do: tell a trusted adult
+// right now. Keeping it separate from any grown-up-facing resource text.
 export const CRISIS_RESOURCE_MESSAGE =
-  "If you're in immediate danger or thinking about harming yourself, please " +
-  "reach out to a crisis line or emergency services in your country right " +
-  "now — you don't have to go through this alone. In the US you can call " +
-  "or text 988. Findahelpline.com lists crisis lines for most countries.";
+  "This sounds really important. Please go tell a grown-up you trust right now — " +
+  "like your mom, dad, or a teacher — and tell them exactly what you told me. " +
+  "They can help you.";

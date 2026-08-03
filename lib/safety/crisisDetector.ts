@@ -14,6 +14,19 @@ const TRIGGER_PATTERNS: RegExp[] = [
   /\bself[- ]harm\b/i,
   /\bcan'?t (go on|do this anymore)\b/i,
   /\bbetter off (dead|without me)\b/i,
+
+  // Child-specific: abuse, grooming, and severe distress. Ordinary
+  // bullying/sadness talk is handled by the persona's own warmth and the
+  // "encourage support" guidance, not this hard trigger — this list is
+  // for the more acute/unsafe end, favoring false positives over missed
+  // disclosures since it's a backup/logging layer, not the only response.
+  /\b(hit|hits|hitting|hurt|hurts|hurting) me\b/i,
+  /\btouch(ed|ing|es)? me\b/i,
+  /\bdon'?t tell (mom|dad|my (mom|dad|parents)|anyone)\b/i,
+  /\b(keep|keeping) (it |this )?a secret\b/i,
+  /\bscared of (him|her|them)\b/i,
+  /\bafraid to go (home|school)\b/i,
+  /\brun away from home\b/i,
 ];
 
 export interface CrisisScanResult {

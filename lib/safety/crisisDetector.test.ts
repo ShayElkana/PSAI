@@ -20,4 +20,16 @@ describe("scanForCrisisLanguage", () => {
     expect(result.flagged).toBe(true);
     expect(result.matched).toBeTruthy();
   });
+
+  it("flags child-specific abuse and distress language", () => {
+    expect(scanForCrisisLanguage("my uncle hurts me").flagged).toBe(true);
+    expect(scanForCrisisLanguage("he touched me and said don't tell mom").flagged).toBe(true);
+    expect(scanForCrisisLanguage("I'm scared of him").flagged).toBe(true);
+    expect(scanForCrisisLanguage("I'm afraid to go home").flagged).toBe(true);
+  });
+
+  it("does not flag ordinary bullying/sadness talk", () => {
+    expect(scanForCrisisLanguage("this kid at school keeps bullying me").flagged).toBe(false);
+    expect(scanForCrisisLanguage("nobody likes me").flagged).toBe(false);
+  });
 });
