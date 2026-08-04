@@ -2,7 +2,10 @@ import { GoogleGenAI, Modality, type Session } from "@google/genai";
 import type { Language } from "../../types/conversation";
 
 const LIVE_MODEL = process.env.GEMINI_LIVE_MODEL || "gemini-3.1-flash-live-preview";
-const VOICE_NAME = process.env.GEMINI_VOICE_NAME || "Aoede";
+// "Aoede" reads as bright/breezy in practice — too upbeat for a comforting
+// kids companion. "Vindemiatrix" is documented as a gentle voice, a better
+// default fit. Override via GEMINI_VOICE_NAME if you want to try another.
+const VOICE_NAME = process.env.GEMINI_VOICE_NAME || "Vindemiatrix";
 
 export interface LiveSessionCallbacks {
   onAudio: (base64Pcm24k: string) => void;
