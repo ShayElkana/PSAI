@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { Orb } from "@/components/orb/Orb";
+import { OceanBackground } from "@/components/OceanBackground";
 import { ChatPanel, type ChatMessage } from "@/components/chat/ChatPanel";
 import { VoiceControls } from "@/components/chat/VoiceControls";
 import { LanguageSelector } from "@/components/chat/LanguageSelector";
@@ -18,7 +18,7 @@ import type { ClientToRelay, Emotion, Language, RelayState, RelayToClient } from
 const INPUT_SAMPLE_RATE = 16000;
 
 function emotionForState(state: RelayState): Emotion {
-  if (state === "speaking") return "warm";
+  if (state === "speaking") return "speaking";
   if (state === "listening") return "listening";
   if (state === "reconnecting" || state === "error") return "concerned";
   return "calm";
@@ -185,41 +185,64 @@ export default function Home() {
   }, [sendToRelay, textInput]);
 
   return (
-    <main
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "1.5rem",
-        minHeight: "100vh",
-        padding: "2rem 1rem",
-      }}
-    >
-      <LanguageSelector language={language} onChange={handleLanguageChange} />
-
-      <Orb state={relayState} emotion={emotionForState(relayState)} audioLevel={audioLevel} />
-
-      {safetyNotice && (
-        <p
-          role="status"
-          style={{ maxWidth: 420, textAlign: "center", fontSize: "0.85rem", color: "#5b8def" }}
-        >
-          {safetyNotice}
-        </p>
-      )}
-
-      <ChatPanel messages={messages} />
-
-      <VoiceControls
+    <>
+      <OceanBackground
         state={relayState}
-        micEnabled={micEnabled}
-        micAvailable={micAvailable}
-        onToggleMic={handleToggleMic}
-        textInput={textInput}
-        onTextInputChange={setTextInput}
-        onSendText={handleSendText}
+        emotion={emotionForState(relayState)}
+        audioLevel={audioLevel}
       />
-    </main>
+      <main
+        style={{
+          position: "relative",
+          zIndex: 1,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "1.75rem",
+          minHeight: "100vh",
+          padding: "2.5rem 1.25rem",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "1.6rem",
+            fontWeight: 700,
+            textAlign: "center",
+          }}
+        >
+          Hi, I&apos;m PSAI!
+        </h1>
+
+        <LanguageSelector language={language} onChange={handleLanguageChange} />
+
+        {safetyNotice && (
+          <p
+            role="status"
+            style={{
+              maxWidth: 420,
+              textAlign: "center",
+              fontSize: "1rem",
+              fontWeight: 600,
+              color: "#e8734a",
+            }}
+          >
+            {safetyNotice}
+          </p>
+        )}
+
+        <ChatPanel messages={messages} />
+
+        <VoiceControls
+          state={relayState}
+          micEnabled={micEnabled}
+          micAvailable={micAvailable}
+          onToggleMic={handleToggleMic}
+          textInput={textInput}
+          onTextInputChange={setTextInput}
+          onSendText={handleSendText}
+        />
+      </main>
+    </>
   );
 }

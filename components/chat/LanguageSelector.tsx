@@ -16,24 +16,30 @@ interface LanguageSelectorProps {
 
 export function LanguageSelector({ language, onChange }: LanguageSelectorProps) {
   return (
-    <div style={{ display: "flex", gap: "0.4rem" }}>
-      {OPTIONS.map((opt) => (
-        <button
-          key={opt.value}
-          onClick={() => onChange(opt.value)}
-          style={{
-            padding: "0.3rem 0.7rem",
-            borderRadius: 999,
-            border: "1px solid #444",
-            background: language === opt.value ? "#5b8def" : "transparent",
-            color: language === opt.value ? "#fff" : "#aaa",
-            fontSize: "0.78rem",
-            cursor: "pointer",
-          }}
-        >
-          {opt.label}
-        </button>
-      ))}
+    <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", justifyContent: "center" }}>
+      {OPTIONS.map((opt) => {
+        const active = language === opt.value;
+        return (
+          <button
+            key={opt.value}
+            onClick={() => onChange(opt.value)}
+            style={{
+              padding: "0.5rem 1.1rem",
+              borderRadius: 999,
+              border: active ? "2px solid #ff9d6c" : "2px solid rgba(150, 120, 160, 0.35)",
+              background: active ? "#ff9d6c" : "rgba(255, 255, 255, 0.35)",
+              color: active ? "#4a2c1f" : "inherit",
+              fontWeight: 600,
+              fontSize: "0.9rem",
+              cursor: "pointer",
+              transition: "transform 0.15s ease, background 0.15s ease",
+              transform: active ? "scale(1.05)" : "scale(1)",
+            }}
+          >
+            {opt.label}
+          </button>
+        );
+      })}
     </div>
   );
 }

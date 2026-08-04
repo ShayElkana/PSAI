@@ -1,12 +1,30 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Sky (0–32%) → horizon (mountains sit here) → deep water → bright
+     shallow turquoise near the bottom, like clear water over pale rock. */
+  --scene-gradient: linear-gradient(
+    180deg,
+    #bfe4f5 0%,
+    #a9d9ee 30%,
+    #2f6f95 40%,
+    #1c5478 55%,
+    #23a8a0 78%,
+    #4fd8cf 100%
+  );
+  --foreground: #163544;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --scene-gradient: linear-gradient(
+      180deg,
+      #0d2436 0%,
+      #0c2d42 30%,
+      #0b3f56 40%,
+      #0a4a5c 55%,
+      #0f6e6b 78%,
+      #17968e 100%
+    );
+    --foreground: #e6f6fb;
   }
 }
 
@@ -25,8 +43,9 @@ body {
   display: flex;
   flex-direction: column;
   color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--scene-gradient);
+  font-family: var(--font-baloo), ui-rounded, "Quicksand", "Segoe UI", sans-serif;
+  font-size: 18px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -42,8 +61,149 @@ a {
   text-decoration: none;
 }
 
+button,
+input {
+  font-family: inherit;
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
+  }
+}
+
+@keyframes psai-talk-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 127, 107, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(255, 127, 107, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 127, 107, 0);
+  }
+}
+
+.psai-talk-pulse {
+  animation: psai-talk-pulse 1.8s ease-out infinite;
+}
+
+/* Chunky "sticker button" press feel, common in kids' UI — a solid bottom
+   edge (set via inline box-shadow per button) that visually compresses on
+   press instead of just a flat click. */
+.psai-chunky-btn {
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+
+.psai-chunky-btn:active {
+  transform: translateY(3px);
+}
+
+/* Animated ocean backdrop: two drifting wave bands + rising bubbles behind
+   everything else, kept subtle (low opacity, slow motion) so it reads as
+   ambient atmosphere rather than competing with the orb/chat. */
+.psai-ocean {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.psai-wave {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-repeat: repeat-x;
+  background-size: 400px 100%;
+}
+
+.psai-wave-back {
+  height: 170px;
+  opacity: 0.35;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 60'%3E%3Cpath d='M0 30 C 50 0 150 60 200 30 C 250 0 350 60 400 30 L400 60 L0 60 Z' fill='%2363c9c2'/%3E%3C/svg%3E");
+  animation: psai-wave-drift-back 16s linear infinite;
+}
+
+.psai-wave-front {
+  height: 120px;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 60'%3E%3Cpath d='M0 30 C 50 0 150 60 200 30 C 250 0 350 60 400 30 L400 60 L0 60 Z' fill='%232fb0a8'/%3E%3C/svg%3E");
+  animation: psai-wave-drift-front 9s linear infinite;
+}
+
+/* Snow-capped mountain silhouette sitting at the horizon line. */
+.psai-mountains {
+  position: absolute;
+  left: 0;
+  top: 20vh;
+  width: 100%;
+  height: 16vh;
+}
+
+/* Boulders in the foreground water — sit above the wave layers so the
+   waves read as lapping around their base. */
+.psai-rocks {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 24vh;
+}
+
+/* The interactive light — same footprint as the rocks strip, painted after
+   them so it glows up among/behind the boulders rather than floating as a
+   separate shape elsewhere on the page. */
+.psai-water-glow {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 24vh;
+}
+
+@keyframes psai-wave-drift-back {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: 400px;
+  }
+}
+
+@keyframes psai-wave-drift-front {
+  from {
+    background-position-x: 0;
+  }
+  to {
+    background-position-x: -400px;
+  }
+}
+
+.psai-bubble {
+  position: absolute;
+  bottom: -10vh;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.1));
+  animation-name: psai-bubble-rise;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes psai-bubble-rise {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-110vh);
+    opacity: 0;
   }
 }

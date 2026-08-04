@@ -13,11 +13,11 @@ interface VoiceControlsProps {
 }
 
 const STATE_LABEL: Record<RelayState, string> = {
-  connecting: "Connecting…",
-  listening: "Listening",
-  speaking: "Speaking",
-  reconnecting: "Reconnecting…",
-  error: "Something went wrong",
+  connecting: "Getting ready…",
+  listening: "I'm listening",
+  speaking: "PSAI is talking",
+  reconnecting: "One sec, coming right back…",
+  error: "Oops, something went wrong",
 };
 
 export function VoiceControls({
@@ -30,27 +30,35 @@ export function VoiceControls({
   onSendText,
 }: VoiceControlsProps) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem" }}>
-      <p style={{ fontSize: "0.85rem", color: "#666" }}>{STATE_LABEL[state]}</p>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
+      <p style={{ fontSize: "1rem", fontWeight: 600, opacity: 0.85 }}>{STATE_LABEL[state]}</p>
 
       {micAvailable && (
         <button
           onClick={onToggleMic}
+          className={`psai-chunky-btn${micEnabled ? " psai-talk-pulse" : ""}`}
           style={{
             borderRadius: "999px",
-            padding: "0.6rem 1.4rem",
+            padding: "0.9rem 2.4rem",
             border: "none",
-            background: micEnabled ? "#ff8fa3" : "#ddd",
-            color: micEnabled ? "#fff" : "#333",
+            background: micEnabled
+              ? "linear-gradient(135deg, #ff9d6c, #ff7f6b)"
+              : "linear-gradient(135deg, #ffe0c2, #ffd1a9)",
+            color: "#4a2c1f",
+            fontSize: "1.1rem",
+            fontWeight: 700,
             cursor: "pointer",
+            boxShadow: micEnabled
+              ? "0 4px 0 #d95f43, 0 8px 18px rgba(0, 0, 0, 0.15)"
+              : "0 4px 0 #f0b98a, 0 8px 18px rgba(0, 0, 0, 0.12)",
           }}
         >
-          {micEnabled ? "Mute" : "Talk"}
+          {micEnabled ? "Mute" : "Talk to PSAI"}
         </button>
       )}
 
       <form
-        style={{ display: "flex", gap: "0.5rem", width: "100%", maxWidth: 420 }}
+        style={{ display: "flex", gap: "0.6rem", width: "100%", maxWidth: 420 }}
         onSubmit={(e) => {
           e.preventDefault();
           onSendText();
@@ -62,21 +70,29 @@ export function VoiceControls({
           placeholder={micAvailable ? "Or type instead…" : "Type to talk to PSAI…"}
           style={{
             flex: 1,
-            padding: "0.5rem 0.75rem",
-            borderRadius: 8,
-            border: "1px solid #ccc",
+            padding: "0.75rem 1rem",
+            borderRadius: 999,
+            border: "2px solid rgba(150, 120, 160, 0.35)",
+            background: "rgba(255, 255, 255, 0.55)",
+            color: "inherit",
+            fontSize: "1rem",
           }}
         />
         <button
           type="submit"
           disabled={!textInput.trim()}
+          className="psai-chunky-btn"
           style={{
-            padding: "0.5rem 1rem",
-            borderRadius: 8,
+            padding: "0.75rem 1.4rem",
+            borderRadius: 999,
             border: "none",
-            background: "#333",
-            color: "#fff",
+            background: "#e6d9f7",
+            color: "#4a3b52",
+            fontSize: "1rem",
+            fontWeight: 700,
             cursor: "pointer",
+            opacity: textInput.trim() ? 1 : 0.5,
+            boxShadow: "0 4px 0 #c9b3e8, 0 6px 14px rgba(0, 0, 0, 0.1)",
           }}
         >
           Send

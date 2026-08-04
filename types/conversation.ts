@@ -18,7 +18,7 @@ export type RelayState =
   | "reconnecting"
   | "error";
 
-export type Emotion = "calm" | "warm" | "concerned" | "listening";
+export type Emotion = "calm" | "speaking" | "concerned" | "listening";
 
 export type ClientToRelay =
   | { type: "audio_chunk"; data: string /* base64 PCM16 @ 16kHz mono */ }

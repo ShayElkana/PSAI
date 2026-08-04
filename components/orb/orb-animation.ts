@@ -8,7 +8,7 @@ export interface OrbColors {
 
 const PALETTE: Record<Emotion, OrbColors> = {
   calm: { inner: "#fff8e7", outer: "#ffb703", glow: "rgba(255,183,3,0.55)" },
-  warm: { inner: "#fff0e0", outer: "#ff8fa3", glow: "rgba(255,143,163,0.55)" },
+  speaking: { inner: "#e8f7ff", outer: "#3aa0e0", glow: "rgba(58,160,224,0.55)" },
   concerned: { inner: "#eef4ff", outer: "#5b8def", glow: "rgba(91,141,239,0.55)" },
   listening: { inner: "#f3fff0", outer: "#7bd389", glow: "rgba(123,211,137,0.5)" },
 };
