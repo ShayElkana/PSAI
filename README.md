@@ -5,6 +5,10 @@ helps you through rough patches. Local-first, single-user. See
 `docs/superpowers/specs/2026-07-29-psai-companion-design.md` for the full
 design.
 
+## Demo
+
+[Watch a quick intro](./PSAI_intro.mp4) (`PSAI_intro.mp4`, in this repo).
+
 ## Setup
 
 1. `npm install`
